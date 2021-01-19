@@ -50,24 +50,104 @@ inquirer
         if (error.isTtyError) {
             // Prompt couldn't be rendered in the current environment
         } else {
+            
             // Something else when wrong
         }
     });
 
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
 
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
+
+
 
 // HINT: each employee type (manager, engineer, or intern) has slightly different
 // information; write your code to ask different questions via inquirer depending on
 // employee type.
+inquirer
+    .prompt([
+        {
+            type: "input",
+            name: "engineerName",
+            message: "What's the engineer name?"
+        },
+        {
+            type: "input",
+            name: "engineerId",
+            message: "What's the engineer ID?"
+        },
+        {
+            type: "input",
+            name: "engineerEmail",
+            message: "What's the engineer Email?"
+        },
+        {
+            type: "input",
+            name: "engineerGithub",
+            message: "What's the engineer Github?"
+        },
+    ])
+    .then(answers => {
+        // Use user feedback for... whatever!!
+        console.log(answers)
+        const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub)
+        console.log("This is the new engineer" + JSON.stringify(engineer))
 
+        employeeArr.push(engineer)
+    })
+    .catch(error => {
+        if (error.isTtyError) {
+            // Prompt couldn't be rendered in the current environment
+        } else {
+            
+            // Something else when wrong
+        }
+    });
+    
+    inquirer
+    .prompt([
+        {
+            type: "input",
+            name: "internName",
+            message: "What's the intern name?"
+        },
+        {
+            type: "input",
+            name: "internId",
+            message: "What's the intern ID?"
+        },
+        {
+            type: "input",
+            name: "internEmail",
+            message: "What's the intern Email?"
+        },
+        {
+            type: "input",
+            name: "internSchool",
+            message: "What is the name of intern's School ?"
+        },
+    ])
+    .then(answers => {
+        // Use user feedback for... whatever!!
+        console.log(answers)
+        const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool)
+        console.log("This is the new engineer" + JSON.stringify(intern))
+
+        employeeArr.push(intern)
+    })
+    .catch(error => {
+        if (error.isTtyError) {
+            // Prompt couldn't be rendered in the current environment
+        } else {
+            
+            // Something else when wrong
+        }
+    });
+
+    function createTeam (){
+        fs.writeFile (outputPath,render(employeeArr), (err) => {
+            if (err) throw err;
+            console.log('The file has been saved!');
+          });
+        }
 // HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
 // and Intern classes should all extend from a class named Employee; see the directions
 // for further information. Be sure to test out each class and verify it generates an
